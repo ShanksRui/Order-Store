@@ -17,7 +17,9 @@ public class Program {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
-		DateTimeFormatter f1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		
+		Order order = new Order();
+		order.setMoment(LocalDateTime.now());
 		
 		System.out.println("Enter client data:");
 		System.out.print("Name:");
@@ -26,19 +28,15 @@ public class Program {
 		String email = sc.nextLine();
 		System.out.print("Birth Date(DD/MM/YYYY):");
 		String dateSdr = sc.nextLine();
-		LocalDate date = LocalDate.parse(dateSdr,f1);
+		LocalDate date = LocalDate.parse(dateSdr,Order.f2);
 	    Client client = new Client(clientname, email, date);
-
+        order.setClient(client);
 	
 		System.out.println("Enter order data ");
-		System.out.print("Status");
-		String status = sc.next();
 		System.out.print("How many items to this  order:");
-		sc.nextLine();
 		int n = sc.nextInt();
-		Order order = new Order(OrderStatus.valueOf(status));
 		sc.nextLine();
-		order.setClient(client);
+		
 		for(int i = 1 ;i <= n; i++) {
 			System.out.println("Enter #"+i+" item data:");
 			System.out.print("Product name:");
@@ -52,8 +50,9 @@ public class Program {
 			OrderItem orderitem = new OrderItem(quantity, new Product(name1, price));
 			order.addItem(orderitem);    
 		}
-		LocalDateTime y = LocalDateTime.now();
-		order.setMoment(y);
+		System.out.print("Order Status:");
+		String status = sc.next();
+		order.setStatus(OrderStatus.valueOf(status));
 		
 		System.out.println();
 		System.out.println("ORDER SUMARY:");

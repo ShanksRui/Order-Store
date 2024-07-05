@@ -1,6 +1,7 @@
 	package entities;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +9,9 @@ import java.util.List;
 import entities.enums.OrderStatus;
 
 public class Order {
-     public static DateTimeFormatter f1 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-
+     public static DateTimeFormatter f1 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
+     public static DateTimeFormatter f2 = DateTimeFormatter.ofPattern("dd/MM/yyyy").withZone(ZoneId.systemDefault());
+ 
 	
 	private LocalDateTime moment;
 	private OrderStatus status;
@@ -19,7 +21,9 @@ public class Order {
 	
 	List<OrderItem> items = new ArrayList<>();
 
-	
+	public Order () {
+		
+	}
 	public Order (OrderStatus status) {
 		this.status = status;
 	}
@@ -31,7 +35,7 @@ public class Order {
 		return moment;
 	}
 	public void setMoment(LocalDateTime moment) {
-		this.moment = moment;	
+		this.moment = moment;
 	}
 	public OrderStatus getStatus() {
 		return status;
@@ -53,7 +57,6 @@ public class Order {
 }
 public void setOrderitem(OrderItem orderitem) {
 	this.orderitem = orderitem;
-	
 }
 public Product getProduct() {
 	return product;
@@ -74,16 +77,16 @@ public Double total() {
 
 public String toString() {
    StringBuilder sb = new StringBuilder();
-   sb.append("Order Momment: "+ moment.format(f1)+"\n");
-   sb.append("Oder status: "+status+"\n");
-   sb.append("Client: "+client+"\n");
+   sb.append("Order Momment: "+moment.format(f1)+"\n");
+   sb.append("Order status: "+status+"\n");
+   sb.append("Client- "+client+"\n");
    sb.append("Order Items:\n");
    for(OrderItem x: items) {
-	   sb.append(x.getProduct().getName()+", "+String.format("%.2f",x.getProduct().getPrice())+
-			   ", Quantity "+x.getQuantity()+",Subtotal: "+String.format("%.2f", x.subTotal()));
+	   sb.append(x.getProduct().getName()+", "+String.format("$%.2f",x.getProduct().getPrice())+
+			   ", Quantity "+x.getQuantity()+",Subtotal: "+String.format("$%.2f", x.subTotal()));
 	   sb.append("\n");
         }
-   sb.append(String.format("%.2f", total()));
+   sb.append(String.format("TOTAL:$%.2f ", total()));
 return sb.toString();  
    }
    }	

@@ -8,8 +8,8 @@ public class Client {
 	private String email;
 	private LocalDate birthDate;
 	
-	public Client () {
 	
+	public Client () {
 	}
 	public Client(String clientName, String email, LocalDate birthDate) {
 		this.clientName = clientName;
@@ -37,6 +37,6 @@ public class Client {
 	}
 	@Override
     public String toString() {
-        return "Name: " + clientName + ", Email: " + email + ", Birth Date: " + birthDate;
+        return "Name:" + clientName + ", Email: - " + email + ", Birth Date: ("+birthDate.format(Order.f2)+")";
 	}
 }
